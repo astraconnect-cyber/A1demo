@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon International Academy | School Website Proposal Demo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Playfair Display for classic academic elegance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: 'var(--color-primary)',
+                        primaryDark: 'var(--color-primary-dark)',
+                        secondary: 'var(--color-secondary)',
+                        accentLight: 'var(--color-accent-light)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Dynamic Theme Variables for Live Pitch Customization */
+        :root {
+            --color-primary: #0f294a;       /* Deep Navy */
+            --color-primary-dark: #091a30;
+            --color-secondary: #d97706;     /* Academic Gold */
+            --color-accent-light: #f0f5fa;
+        }
+
+        [data-theme="emerald"] {
+            --color-primary: #064e3b;       /* Royal Emerald */
+            --color-primary-dark: #022c22;
+            --color-secondary: #d97706;     /* Warm Gold */
+            --color-accent-light: #ecfdf5;
+        }
+
+        [data-theme="burgundy"] {
+            --color-primary: #701a2a;       /* Classic Burgundy */
+            --color-primary-dark: #4c0f1b;
+            --color-secondary: #ca8a04;     /* Rich Amber/Gold */
+            --color-accent-light: #fdf2f4;
+        }
+
+        /* Custom subtle animations */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 bg-slate-50 antialiased selection:bg-secondary selection:text-white">
+
+    <!-- ===================================================================== -->
+    <!-- PITCH PRESENTER TOOLBAR (Allows live customization during your demo)  -->
+    <!-- ===================================================================== -->
+    <div id="presenter-bar" class="bg-slate-900 text-white text-xs py-2.5 px-4 border-b border-slate-700 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <span class="bg-amber-500 text-slate-950 font-bold px-2 py-0.5 rounded uppercase tracking-wider text-[10px]">Live Pitch Demo</span>
+                <span class="text-slate-300 hidden sm:inline">Customize live for the Principal:</span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 sm:gap-5">
+                <!-- Live School Name Input -->
+                <div class="flex items-center gap-1.5">
+                    <label for="school-name-input" class="text-slate-400">School Name:</label>
+                    <input type="text" id="school-name-input" value="Horizon International Academy" 
+                           class="bg-slate-800 border border-slate-600 rounded px-2 py-1 text-white text-xs focus:outline-none focus:border-amber-400 w-44 sm:w-52"
+                           placeholder="Type Principal's School Name...">
+                </div>
+
+                <!-- Color Theme Switcher -->
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-400 hidden md:inline">School Colors:</span>
+                    <button onclick="setTheme('navy')" title="Navy & Gold" class="w-5 h-5 rounded-full bg-[#0f294a] border-2 border-amber-400 ring-2 ring-offset-1 ring-offset-slate-900 ring-white transition" id="btn-theme-navy"></button>
+                    <button onclick="setTheme('emerald')" title="Emerald & Gold" class="w-5 h-5 rounded-full bg-[#064e3b] border-2 border-amber-400 transition opacity-75 hover:opacity-100" id="btn-theme-emerald"></button>
+                    <button onclick="setTheme('burgundy')" title="Burgundy & Gold" class="w-5 h-5 rounded-full bg-[#701a2a] border-2 border-amber-400 transition opacity-75 hover:opacity-100" id="btn-theme-burgundy"></button>
+                </div>
+
+                <button onclick="document.getElementById('presenter-bar').style.display='none'" class="text-slate-400 hover:text-white ml-1" title="Hide Pitch Bar">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- TOP CONTACT & PORTAL QUICK BAR                                        -->
+    <!-- ===================================================================== -->
+    <div class="bg-primaryDark text-slate-200 text-xs py-2 px-4 hidden md:block">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-1.5"><i data-lucide="phone" class="w-3.5 h-3.5 text-secondary"></i> +234 (0) 800-HORIZON-EDU</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="mail" class="w-3.5 h-3.5 text-secondary"></i> admissions@horizonacademy.edu</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5 text-secondary"></i> Mon - Fri: 7:30 AM - 4:30 PM</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="openModal('portal')" class="hover:text-secondary transition flex items-center gap-1 font-medium">
+                    <i data-lucide="lock" class="w-3 h-3"></i> Parent & Student Portal
+                </button>
+                <span class="text-slate-600">|</span>
+                <a href="#events" class="hover:text-secondary transition">Academic Calendar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- STICKY MAIN NAVIGATION BAR                                            -->
+    <!-- ===================================================================== -->
+    <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Custom SVG Crest & Dynamic School Name -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                        <!-- Custom SVG School Crest -->
+                        <svg class="w-8 h-8 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" fill="currentColor" fill-opacity="0.15"/>
+                            <path d="M12 6v12M8 10h8M9 14h6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="school-name-display font-serif font-bold text-lg sm:text-xl text-primary block leading-tight">Horizon International Academy</span>
+                        <span class="text-[11px] uppercase tracking-widest text-slate-500 font-semibold">Excellence & Character</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-700">
+                    <a href="#home" class="hover:text-primary transition">Home</a>
+                    <a href="#about" class="hover:text-primary transition">About Us</a>
+                    <a href="#academics" class="hover:text-primary transition">Academics</a>
+                    <a href="#admissions" class="hover:text-primary transition">Admissions & Fees</a>
+                    <a href="#campus" class="hover:text-primary transition">Campus Life</a>
+                    <a href="#contact" class="hover:text-primary transition">Contact</a>
+                </nav>
+
+                <!-- CTA & Mobile Menu Button -->
+                <div class="flex items-center gap-3">
+                    <button onclick="openModal('apply')" class="bg-secondary hover:bg-amber-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <span>Apply Now</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    
+                    <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-6 space-y-2 shadow-xl">
+            <a href="#home" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Home</a>
+            <a href="#about" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">About Us</a>
+            <a href="#academics" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Academics</a>
+            <a href="#admissions" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Admissions & Fees</a>
+            <a href="#campus" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Campus Life</a>
+            <a href="#contact" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Contact</a>
+            <div class="pt-2 border-t border-slate-100">
+                <button onclick="openModal('portal')" class="w-full text-left px-3 py-2.5 text-sm font-semibold text-primary flex items-center gap-2">
+                    <i data-lucide="lock" class="w-4 h-4"></i> Parent & Student Portal Login
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- 2. HERO SECTION                                                       -->
+    <!-- ===================================================================== -->
+    <section id="home" class="relative bg-primary text-white overflow-hidden">
+        <!-- Background Hero Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1920&q=80" 
+                 onerror="this.src='https://placehold.co/1920x1080/0f294a/ffffff?text=Campus+Hero+Image'"
+                 alt="Students smiling on campus" 
+                 class="w-full h-full object-cover object-center opacity-35">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/50"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32">
+            <div class="max-w-2xl">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-amber-300 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    Admissions Open for 2026/2027 Academic Session
+                </div>
+                
+                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                    Inspiring Excellence, Shaping Tomorrow's Leaders
+                </h1>
+                
+                <p class="text-slate-200 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 font-light">
+                    At <span class="school-name-display font-semibold text-white">Horizon International Academy</span>, we blend world-class academic rigor, modern STEM innovation, and strong moral values to nurture confident, globally minded scholars.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="openModal('apply')" class="bg-secondary hover:bg-amber-600 text-white font-semibold px-7 py-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 text-base">
+                        <span>Start Admission Application</span>
+                        <i data-lucide="file-check" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="openModal('tour')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold px-7 py-4 rounded-xl transition flex items-center justify-center gap-2 text-base">
+                        <i data-lucide="play-circle" class="w-5 h-5 text-secondary"></i>
+                        <span>Take a Virtual Campus Tour</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 3. QUICK STATS / HIGHLIGHTS BAR                                       -->
+    <!-- ===================================================================== -->
+    <section class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div class="flex items-start gap-4">
+                <div class="p-3 rounded-xl bg-accentLight text-primary shrink-0">
+                    <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+                </div>
+                <div>
+                    <div class="text-2xl sm:text-3xl font-bold text-primary">99.4%</div>
+                    <div class="text-xs sm:text-sm text-slate-500 font-medium">University Acceptance Rate</div>
+                </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+                <div class="p-3 rounded-xl bg-accentLight text-primary shrink-0">
+                    <i data-lucide="users" class="w-7 h-7"></i>
+                </div>
+                <div>
+                    <div class="text-2xl sm:text-3xl font-bold text-primary">15 : 1</div>
+                    <div class="text-xs sm:text-sm text-slate-500 font-medium">Student-to-Teacher Ratio</div>
+                </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+                <div class="p-3 rounded-xl bg-accentLight text-primary shrink-0">
+                    <i data-lucide="trophy" class="w-7 h-7"></i>
+                </div>
+                <div>
+                    <div class="text-2xl sm:text-3xl font-bold text-primary">25+</div>
+                    <div class="text-xs sm:text-sm text-slate-500 font-medium">Clubs, Sports & Arts Societies</div>
+                </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+                <div class="p-3 rounded-xl bg-accentLight text-primary shrink-0">
+                    <i data-lucide="cpu" class="w-7 h-7"></i>
+                </div>
+                <div>
+                    <div class="text-2xl sm:text-3xl font-bold text-primary">100%</div>
+                    <div class="text-xs sm:text-sm text-slate-500 font-medium">Smart Classrooms & STEM Labs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 4. ABOUT & PRINCIPAL'S WELCOME SECTION                                -->
+    <!-- ===================================================================== -->
+    <section id="about" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+            <!-- Principal Portrait & Accreditation Badge -->
+            <div class="lg:col-span-5 relative">
+                <div class="rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" 
+                         onerror="this.src='https://placehold.co/600x750/0f294a/ffffff?text=Principal+Portrait'"
+                         alt="School Principal" 
+                         class="w-full h-[440px] object-cover">
+                </div>
+                <!-- Floating Quote Card -->
+                <div class="bg-primary text-white p-5 rounded-xl shadow-xl max-w-xs -mt-12 ml-4 sm:ml-8 relative z-10 border-l-4 border-secondary">
+                    <p class="font-serif italic text-sm text-slate-200 mb-2">"Every child possesses a unique spark; our mission is to ignite it with purpose and integrity."</p>
+                    <p class="font-bold text-sm text-white">Dr. Evelyn Adeyemi, Ph.D.</p>
+                    <p class="text-xs text-amber-300">Principal & Head of School</p>
+                </div>
+            </div>
+
+            <!-- Welcome Message & Core Values -->
+            <div class="lg:col-span-7">
+                <span class="text-secondary font-bold uppercase tracking-wider text-xs">Welcome From The Principal</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-primary mt-2 mb-6">
+                    Nurturing Curious Minds & Compassionate Hearts
+                </h2>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    Welcome to <span class="school-name-display font-semibold text-slate-800">Horizon International Academy</span>. Choosing the right school is one of the most important decisions a family makes. Here, we provide a safe, stimulating, and inclusive environment where students are challenged academically while supported personally.
+                </p>
+                <p class="text-slate-600 leading-relaxed mb-8">
+                    Our dedicated faculty combine proven teaching methodologies with modern digital tools, ensuring every graduate leaves not only with stellar examination results, but with critical thinking, leadership skills, and strong ethical character.
+                </p>
+
+                <!-- Core Values Grid -->
+                <div class="grid sm:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                        <i data-lucide="award" class="w-6 h-6 text-secondary mb-2"></i>
+                        <h4 class="font-bold text-primary text-sm">Academic Rigor</h4>
+                        <p class="text-xs text-slate-500 mt-1">Blended national & international curriculum standards.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-secondary mb-2"></i>
+                        <h4 class="font-bold text-primary text-sm">Moral Integrity</h4>
+                        <p class="text-xs text-slate-500 mt-1">Character education, discipline, and community service.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm">
+                        <i data-lucide="lightbulb" class="w-6 h-6 text-secondary mb-2"></i>
+                        <h4 class="font-bold text-primary text-sm">Future Innovation</h4>
+                        <p class="text-xs text-slate-500 mt-1">Robotics, coding, public speaking, and global readiness.</p>
+                    </div>
+                </div>
+
+                <!-- Accreditation Badges -->
+                <div class="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200 text-xs font-semibold text-slate-500">
+                    <span class="uppercase tracking-wider text-slate-400">Accredited By:</span>
+                    <span class="bg-slate-200/70 text-slate-700 px-3 py-1.5 rounded-md">Ministry of Education</span>
+                    <span class="bg-slate-200/70 text-slate-700 px-3 py-1.5 rounded-md">Cambridge International</span>
+                    <span class="bg-slate-200/70 text-slate-700 px-3 py-1.5 rounded-md">WAEC / NECO Approved</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 5. ACADEMIC PROGRAMS (Interactive Tabs)                               -->
+    <!-- ===================================================================== -->
+    <section id="academics" class="py-20 bg-white border-y border-slate-200/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-secondary font-bold uppercase tracking-wider text-xs">Academic Pathways</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-primary mt-2 mb-4">Tailored Learning at Every Stage</h2>
+                <p class="text-slate-600 text-sm sm:text-base">Click through our academic divisions to explore how we guide students from their earliest discoveries to university placement.</p>
+            </div>
+
+            <!-- Interactive Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10" id="academic-tabs">
+                <button onclick="switchAcademicTab('early')" data-tab="early" class="tab-btn active bg-primary text-white font-semibold px-5 py-3 rounded-xl text-sm shadow-sm transition">
+                    Early Years (Ages 2–5)
+                </button>
+                <button onclick="switchAcademicTab('primary')" data-tab="primary" class="tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold px-5 py-3 rounded-xl text-sm transition">
+                    Primary School (Grades 1–6)
+                </button>
+                <button onclick="switchAcademicTab('junior')" data-tab="junior" class="tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold px-5 py-3 rounded-xl text-sm transition">
+                    Junior Secondary (JSS 1–3)
+                </button>
+                <button onclick="switchAcademicTab('senior')" data-tab="senior" class="tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold px-5 py-3 rounded-xl text-sm transition">
+                    Senior Secondary (SSS 1–3)
+                </button>
+            </div>
+
+            <!-- Dynamic Tab Content Container -->
+            <div id="academic-content" class="bg-slate-50 rounded-2xl border border-slate-200/80 p-6 sm:p-10 shadow-sm fade-in">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 6. INTERACTIVE ADMISSIONS & TUITION ESTIMATOR SECTION                 -->
+    <!-- ===================================================================== -->
+    <section id="admissions" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-10 items-start">
+            <!-- Left: 3-Step Admission Process -->
+            <div class="lg:col-span-6">
+                <span class="text-secondary font-bold uppercase tracking-wider text-xs">Simple Digital Enrollment</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-primary mt-2 mb-4">Streamlined Admissions for Busy Parents</h2>
+                <p class="text-slate-600 mb-8 text-sm sm:text-base">
+                    Our modern online portal eliminates paperwork bottlenecks—allowing prospective parents to inquire, book tours, and submit applications from any device.
+                </p>
+
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0 shadow">1</div>
+                        <div>
+                            <h4 class="font-bold text-primary text-lg">Online Inquiry & Campus Visit</h4>
+                            <p class="text-sm text-slate-600 mt-1">Schedule a personalized physical tour or live virtual walkthrough with our Admissions Coordinator.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0 shadow">2</div>
+                        <div>
+                            <h4 class="font-bold text-primary text-lg">Digital Application & Assessment</h4>
+                            <p class="text-sm text-slate-600 mt-1">Submit student transcripts online and book a convenient date for placement assessment.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-secondary text-white font-bold flex items-center justify-center shrink-0 shadow">3</div>
+                        <div>
+                            <h4 class="font-bold text-primary text-lg">Offer Letter & Seamless Onboarding</h4>
+                            <p class="text-sm text-slate-600 mt-1">Receive admission confirmation digitally and access the Parent Portal for uniforms, bus routes, and term schedules.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <button onclick="openModal('apply')" class="bg-primary hover:bg-primaryDark text-white font-semibold px-6 py-3.5 rounded-xl shadow transition flex items-center gap-2 text-sm">
+                        <span>Launch Online Application Form</span>
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="showToast('2026/2027 School Prospectus PDF download started!')" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold px-5 py-3.5 rounded-xl transition flex items-center gap-2 text-sm">
+                        <i data-lucide="download" class="w-4 h-4 text-secondary"></i>
+                        <span>Download Prospectus (PDF)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: Interactive Term Tuition & Fee Estimator Widget -->
+            <div class="lg:col-span-6 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-6 sm:p-8">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-primary">Interactive Term Fee Estimator</h3>
+                        <p class="text-xs text-slate-500">Transparent fee breakdown for prospective parents</p>
+                    </div>
+                    <span class="bg-accentLight text-primary text-xs font-bold px-3 py-1 rounded-full">2026/2027</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Select Academic Level</label>
+                        <select id="fee-grade" onchange="calculateFees()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium text-slate-800 focus:outline-none focus:border-primary">
+                            <option value="25000">Early Years (Creche / Nursery)</option>
+                            <option value="32000" selected>Primary School (Grades 1 - 6)</option>
+                            <option value="41000">Junior Secondary (JSS 1 - 3)</option>
+                            <option value="48000">Senior Secondary (SSS 1 - 3)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Enrollment Type</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="boarding" value="0" checked onchange="calculateFees()" class="peer sr-only">
+                                <div class="p-3 rounded-xl border border-slate-200 peer-checked:border-primary peer-checked:bg-accentLight text-center text-sm font-semibold text-slate-700 peer-checked:text-primary transition">
+                                    Day Student
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="boarding" value="180000" onchange="calculateFees()" class="peer sr-only">
+                                <div class="p-3 rounded-xl border border-slate-200 peer-checked:border-primary peer-checked:bg-accentLight text-center text-sm font-semibold text-slate-700 peer-checked:text-primary transition">
+                                    Full Boarding
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Optional Add-ons -->
+                    <div class="pt-2 space-y-2">
+                        <label class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200/70 cursor-pointer">
+                            <span class="text-sm text-slate-700 font-medium">School Bus Shuttle Service</span>
+                            <input type="checkbox" id="fee-bus" onchange="calculateFees()" class="w-4 h-4 accent-primary rounded">
+                        </label>
+                        <label class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200/70 cursor-pointer">
+                            <span class="text-sm text-slate-700 font-medium">Nutritious Hot Lunch Plan</span>
+                            <input type="checkbox" id="fee-lunch" checked onchange="calculateFees()" class="w-4 h-4 accent-primary rounded">
+                        </label>
+                    </div>
+
+                    <!-- Total Display -->
+                    <div class="bg-primary text-white rounded-xl p-5 mt-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-300 block">Estimated Termly Total</span>
+                            <span id="fee-total" class="text-2xl sm:text-3xl font-bold text-amber-300">₦365,000</span>
+                        </div>
+                        <button onclick="openModal('apply')" class="bg-secondary hover:bg-amber-600 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition">
+                            Book Tour & Lock Rate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===================================================================== -->
+    <!-- 7. CAMPUS LIFE, NEWS & UPCOMING EVENTS                                -->
+    <!-- ===================================================================== -->
+    <section id="campus" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                <div>
+                    <span class="text-secondary font-bold uppercase tracking-wider text-xs">Campus Life & Updates</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2">Vibrant Learning Beyond the Classroom</h2>
+                </div>
+                <a href="#events" class="text-amber-300 hover:text-amber-200 text-sm font-semibold flex items-center gap-1">
+                    <span>View Full School Calendar</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Campus Facilities Gallery Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-16">
+                <div class="group relative rounded-2xl overflow-hidden h-72 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80" 
+                         onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=STEM+Robotics+Lab'"
+                         alt="STEM Lab" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-secondary text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Innovation</span>
+                        <h3 class="font-bold text-lg mt-2">Modern STEM & Robotics Labs</h3>
+                        <p class="text-xs text-slate-300 mt-1">Hands-on coding, 3D printing, and science experiments.</p>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden h-72 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80" 
+                         onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Sports+Athletics'"
+                         alt="Sports Complex" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-emerald-600 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Athletics</span>
+                        <h3 class="font-bold text-lg mt-2">Championship Sports Complex</h3>
+                        <p class="text-xs text-slate-300 mt-1">Football pitch, basketball courts, swimming & track.</p>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden h-72 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" 
+                         onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Digital+Library'"
+                         alt="Library" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-blue-600 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Resources</span>
+                        <h3 class="font-bold text-lg mt-2">E-Library & Performing Arts</h3>
+                        <p class="text-xs text-slate-300 mt-1">Over 15,000 digital & print volumes plus music studios.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News & Upcoming Events Split -->
+            <div id="events" class="grid lg:grid-cols-12 gap-8 pt-8 border-t border-slate-800">
+                <!-- Latest News (7 cols) -->
+                <div class="lg:col-span-7 space-y-4">
+                    <h3 class="font-serif text-2xl font-bold text-white mb-4">Latest School News & Achievements</h3>
+                    
+                    <div class="bg-slate-800/70 border border-slate-700/80 p-5 rounded-xl flex flex-col sm:flex-row gap-4 items-start hover:border-secondary/50 transition">
+                        <div class="bg-secondary/20 text-amber-300 p-3 rounded-lg shrink-0">
+                            <i data-lucide="award" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400">November 2026 • Student Achievement</span>
+                            <h4 class="font-bold text-white text-base mt-1">Students Win 1st Place at National STEM & Robotics Olympiad</h4>
+                            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">Our Senior Secondary robotics team designed an automated solar irrigation prototype, earning top national honors.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/70 border border-slate-700/80 p-5 rounded-xl flex flex-col sm:flex-row gap-4 items-start hover:border-secondary/50 transition">
+                        <div class="bg-blue-500/20 text-blue-300 p-3 rounded-lg shrink-0">
+                            <i data-lucide="book-open" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400">October 2026 • Academic Excellence</span>
+                            <h4 class="font-bold text-white text-base mt-1">100% Distinction & Credit Pass Rate in WAEC & IGCSE Exams</h4>
+                            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">Celebrating the Class of 2026 for achieving record-breaking scores across Sciences, Humanities, and Mathematics.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Calendar Events (5 cols) -->
+                <div class="lg:col-span-5">
+                    <h3 class="font-serif text-2xl font-bold text-white mb-4">Upcoming Events</h3>
+                    <div class="bg-slate-800/70 border border-slate-700/80 rounded-xl p-5 space-y-4">
+                        <div class="flex items-center gap-4 pb-4 border-b border-slate-700">
+                            <div class="bg-primary border border-slate-600 rounded-lg px-3 py-2 text-center shrink-0">
+                                <span class="block text-[10px] uppercase text-amber-400 font-bold">NOV</span>
+                                <span class="block text-lg font-bold text-white">24</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white">Annual Open House & Campus Tour</h4>
+                                <p class="text-xs text-slate-400">9:00 AM – 1:00 PM • Main Auditorium</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 pb-4 border-b border-slate-700">
+                            <div class="bg-primary border border-slate-600 rounded-lg px-3 py-2 text-center shrink-0">
+                                <span class="block text-[10px] uppercase text-amber-400 font-bold">DEC</span>
+                                <span class="block text-lg font-bold text-white">05</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white">Inter-House Sports & Cultural Festival</h4>
+                                <p class="text-xs text-slate-400">10:00 AM • School Sports Complex</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="bg-primary border border-slate-600 rounded-lg px-3 py-2 text-center shrink-0">
+                                <span class="block text-[10px] uppercase text-amber-400 font-bold">JAN</span>
+                                <span class="block text-lg font-bold text-white">12</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white">Entrance Examination (Batch A)</h4>
+                                <p class="text-xs text-slate-400">8:30 AM • ICT & Assessment Center</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- 8. PARENT & ALUMNI TESTIMONIALS                                       -->
+    <!-- ===================================================================== -->
+    <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-secondary font-bold uppercase tracking-wider text-xs">Community Voices</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-primary mt-2">Trusted by Parents, Loved by Students</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed italic mb-6">
+                        "Moving our two children here was the best decision we ever made. Their confidence in public speaking and mathematics has skyrocketed, and the teachers genuinely care."
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 pt-4 border-t border-slate-100">
+                    <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm">BO</div>
+                    <div>
+                        <h4 class="font-bold text-sm text-primary">Mrs. Bukola Okafor</h4>
+                        <p class="text-xs text-slate-500">Parent (Primary & JSS 2)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed italic mb-6">
+                        "The foundation I received in the STEM labs prepared me seamlessly for my Computer Engineering degree. The discipline and mentorship stay with you for life."
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 pt-4 border-t border-slate-100">
+                    <div class="w-10 h-10 rounded-full bg-secondary text-white font-bold flex items-center justify-center text-sm">DM</div>
+                    <div>
+                        <h4 class="font-bold text-sm text-primary">David Mensah</h4>
+                        <p class="text-xs text-slate-500">Alumnus, Class of 2023</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-7 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed italic mb-6">
+                        "From the transparent communication to the safe boarding facilities and extracurricular balance, this school sets the gold standard for modern education."
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 pt-4 border-t border-slate-100">
+                    <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm">AI</div>
+                    <div>
+                        <h4 class="font-bold text-sm text-primary">Engr. Ahmed Ibrahim</h4>
+                        <p class="text-xs text-slate-500">PTA Executive & Parent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===================================================================== -->
+    <!-- 9. COMPREHENSIVE FOOTER                                               -->
+    <!-- ===================================================================== -->
+    <footer id="contact" class="bg-primaryDark text-slate-300 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+                <!-- Col 1: Brand -->
+                <div>
+                    <div class="flex items-center gap-2.5 mb-4">
+                        <div class="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-white font-bold font-serif text-lg">H</div>
+                        <span class="school-name-display font-serif font-bold text-lg text-white">Horizon International Academy</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Empowering students with academic excellence, digital fluency, and timeless moral character since 2004.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-secondary text-white flex items-center justify-center transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-secondary text-white flex items-center justify-center transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-secondary text-white flex items-center justify-center transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div>
+                    <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#about" class="hover:text-secondary transition">Principal's Welcome</a></li>
+                        <li><a href="#academics" class="hover:text-secondary transition">Curriculum & Programs</a></li>
+                        <li><a href="#admissions" class="hover:text-secondary transition">Tuition & Fee Estimator</a></li>
+                        <li><button onclick="openModal('portal')" class="hover:text-secondary transition">Parent & Student Portal</button></li>
+                        <li><a href="#events" class="hover:text-secondary transition">Academic Calendar</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Contact Info -->
+                <div>
+                    <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Contact Campus</h4>
+                    <ul class="space-y-3 text-xs">
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>
+                            <span>14 Academic Way, Victoria Island, Lagos, Nigeria</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="phone" class="w-4 h-4 text-secondary shrink-0"></i>
+                            <span>+234 (0) 800-HORIZON-EDU</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="mail" class="w-4 h-4 text-secondary shrink-0"></i>
+                            <span>admissions@horizonacademy.edu</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter -->
+                <div>
+                    <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Parent Newsletter</h4>
+                    <p class="text-xs text-slate-400 mb-3">Subscribe for term dates, admissions updates, and school highlights.</p>
+                    <form onsubmit="event.preventDefault(); showToast('Thank you! Subscribed to school newsletter.'); this.reset();" class="flex gap-2">
+                        <input type="email" required placeholder="Parent email address" class="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-secondary w-full">
+                        <button type="submit" class="bg-secondary hover:bg-amber-600 text-white font-semibold px-3.5 py-2 rounded-lg text-xs transition shrink-0">Join</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright & Proposal Badge -->
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+                <p>&copy; 2026 <span class="school-name-display">Horizon International Academy</span>. All Rights Reserved.</p>
+                <div class="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>Interactive Web Proposal Concept • Designed for School Leadership</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- INTERACTIVE MODALS (Apply Now / Virtual Tour / Parent Portal)         -->
+    <!-- ===================================================================== -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative fade-in">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="modal-body">
+                <!-- Dynamic Modal Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 z-50 transform translate-y-24 opacity-0 transition-all duration-300">
+        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+        <span id="toast-msg" class="text-sm font-medium">Action completed!</span>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VANILLA JAVASCRIPT LOGIC                                              -->
+    <!-- ===================================================================== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // 1. Live Pitch Customizer: School Name Sync
+        const nameInput = document.getElementById('school-name-input');
+        nameInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim() || 'Horizon International Academy';
+            document.querySelectorAll('.school-name-display').forEach(el => {
+                el.textContent = val;
+            });
+        });
+
+        // 2. Live Pitch Customizer: Color Theme Switcher
+        function setTheme(theme) {
+            if (theme === 'navy') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+            // Update active ring indicator
+            ['navy', 'emerald', 'burgundy'].forEach(t => {
+                const btn = document.getElementById(`btn-theme-${t}`);
+                if (t === theme) {
+                    btn.classList.add('ring-2', 'ring-offset-1', 'ring-offset-slate-900', 'ring-white', 'opacity-100');
+                    btn.classList.remove('opacity-75');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-offset-1', 'ring-offset-slate-900', 'ring-white', 'opacity-100');
+                    btn.classList.add('opacity-75');
+                }
+            });
+            showToast(`Theme switched to ${theme.charAt(0).toUpperCase() + theme.slice(1)} & Gold`);
+        }
+
+        // 3. Mobile Navigation Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 4. Academic Programs Interactive Tabs Data & Logic
+        const academicData = {
+            early: {
+                title: "Early Years Foundation Stage (Ages 2–5)",
+                subtitle: "Montessori-inspired discovery, phonics, numeracy, and joyful social development.",
+                image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
+                highlights: [
+                    "Safe, colorful, purpose-built Montessori classrooms",
+                    "Early literacy, Jolly Phonics & hands-on sensory play",
+                    "Dedicated caring teaching assistants in every class",
+                    "Music, movement, storytelling & creative arts"
+                ]
+            },
+            primary: {
+                title: "Primary School (Grades 1–6)",
+                subtitle: "Building strong foundations in STEM, literacy, critical thinking, and character.",
+                image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+                highlights: [
+                    "Blended British & National curriculum framework",
+                    "Introduction to Coding, Robotics & French language",
+                    "Personalized reading & mathematics support clinics",
+                    "Leadership roles through Student Council & House Clubs"
+                ]
+            },
+            junior: {
+                title: "Junior Secondary School (JSS 1–3)",
+                subtitle: "Bridging foundational knowledge with analytical inquiry and digital fluency.",
+                image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80",
+                highlights: [
+                    "Well-equipped Basic Science, ICT, and Home Economics labs",
+                    "Public speaking, debate society, and entrepreneurship",
+                    "Preparation for BECE and Cambridge Checkpoint exams",
+                    "Structured mentorship & career guidance counseling"
+                ]
+            },
+            senior: {
+                title: "Senior Secondary / High School (SSS 1–3)",
+                subtitle: "Specialized pathways in Sciences, Humanities, and Business for global university success.",
+                image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+                highlights: [
+                    "Dedicated Physics, Chemistry, Biology & Robotics labs",
+                    "Intensive prep for WAEC, NECO, IGCSE, SAT & IELTS",
+                    "University admissions & scholarship placement office",
+                    "Prefectorial leadership & community impact projects"
+                ]
+            }
+        };
+
+        function switchAcademicTab(key) {
+            // Update tab button styles
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.tab === key) {
+                    btn.classList.add('bg-primary', 'text-white', 'shadow-sm');
+                    btn.classList.remove('bg-slate-100', 'text-slate-700');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'shadow-sm');
+                    btn.classList.add('bg-slate-100', 'text-slate-700');
+                }
+            });
+
+            // Render content
+            const data = academicData[key];
+            const container = document.getElementById('academic-content');
+            container.innerHTML = `
+                <div class="grid
+lg:grid-cols-12 gap-8 items-center fade-in">
+                    <div class="lg:col-span-5">
+                        <img src="${data.image}" onerror="this.src='https://placehold.co/600x400/0f294a/ffffff?text=Academic+Program'" alt="${data.title}" class="w-full h-64 sm:h-72 object-cover rounded-xl shadow-md">
+                    </div>
+                    <div class="lg:col-span-7">
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-primary mb-2">${data.title}</h3>
+                        <p class="text-slate-600 text-sm sm:text-base mb-6">${data.subtitle}</p>
+                        <div class="grid sm:grid-cols-2 gap-3 mb-6">
+                            ${data.highlights.map(item => `
+                                <div class="flex items-start gap-2.5 bg-white p-3 rounded-lg border border-slate-200/70">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-secondary shrink-0 mt-0.5"></i>
+                                    <span class="text-xs sm:text-sm text-slate-700 font-medium">${item}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button onclick="openModal('apply')" class="text-primary font-bold text-sm hover:text-secondary transition inline-flex items-center gap-1.5">
+                            <span>Request Curriculum Syllabus & Apply</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // Load default academic tab
+        switchAcademicTab('early');
+
+        // 5. Interactive Fee Calculator
+        function calculateFees() {
+            const tuition = parseInt(document.getElementById('fee-grade').value);
+            const boarding = parseInt(document.querySelector('input[name="boarding"]:checked').value);
+            const bus = document.getElementById('fee-bus').checked ? 55000 : 0;
+            const lunch = document.getElementById('fee-lunch').checked ? 45000 : 0;
+            
+            const total = tuition + boarding + bus + lunch;
+            document.getElementById('fee-total').textContent = '₦' + total.toLocaleString();
+        }
+
+        // 6. Interactive Modals (Apply Now, Virtual Tour, Portal)
+        function openModal(type) {
+            const backdrop = document.getElementById('modal-backdrop');
+            const body = document.getElementById('modal-body');
+            const schoolName = document.getElementById('school-name-input').value || 'Horizon International Academy';
+
+            if (type === 'apply') {
+                body.innerHTML = `
+                    <span class="text-xs font-bold uppercase tracking-wider text-secondary">2026/2027 Admissions</span>
+                    <h3 class="font-serif text-2xl font-bold text-primary mt-1 mb-2">Start Online Application</h3>
+                    <p class="text-xs text-slate-500 mb-5">Complete this quick inquiry and our Admissions Team will contact you within 24 hours.</p>
+                    <form onsubmit="event.preventDefault(); closeModal(); showToast('Application inquiry submitted successfully!');" class="space-y-3.5">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Parent / Guardian Full Name</label>
+                            <input type="text" required placeholder="e.g., Dr. Chinedu Eze" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-primary">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Phone Number</label>
+                                <input type="tel" required placeholder="+234 800 000 0000" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-primary">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Student's Grade</label>
+                                <select class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-primary">
+                                    <option>Early Years</option>
+                                    <option>Primary (Grades 1-6)</option>
+                                    <option>Junior Secondary</option>
+                                    <option>Senior Secondary</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
+                            <input type="email" required placeholder="parent@email.com" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-primary">
+                        </div>
+                        <button type="submit" class="w-full bg-primary hover:bg-primaryDark text-white font-semibold py-3 rounded-xl shadow-md transition mt-2">
+                            Submit Application Request
+                        </button>
+                    </form>
+                `;
+            } else if (type === 'tour') {
+                body.innerHTML = `
+                    <span class="text-xs font-bold uppercase tracking-wider text-secondary">Interactive Walkthrough</span>
+                    <h3 class="font-serif text-2xl font-bold text-primary mt-1 mb-2">Explore ${schoolName}</h3>
+                    <p class="text-xs text-slate-500 mb-4">Preview our smart classrooms, science laboratories, and sports facilities.</p>
+                    <div class="relative rounded-xl overflow-hidden bg-slate-900 aspect-video mb-4 flex items-center justify-center group">
+                        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover opacity-60">
+                        <div class="absolute text-center text-white p-4">
+                            <div class="w-14 h-14 rounded-full bg-secondary text-white flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                            </div>
+                            <span class="text-xs font-semibold bg-black/50 px-3 py-1 rounded-full">360° Campus Video Preview Ready</span>
+                        </div>
+                    </div>
+                    <button onclick="openModal('apply')" class="w-full bg-secondary hover:bg-amber-600 text-white font-semibold py-3 rounded-xl transition text-sm">
+                        Book an In-Person Campus Visit
+                    </button>
+                `;
+            } else if (type === 'portal') {
+                body.innerHTML = `
+                    <div class="text-center mb-5">
+                        <div class="w-12 h-12 rounded-xl bg-accentLight text-primary flex items-center justify-center mx-auto mb-3">
+                            <i data-lucide="lock" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-primary">School Management Portal</h3>
+                        <p class="text-xs text-slate-500 mt-1">Demo preview of Parent, Student & Staff login gateway</p>
+                    </div>
+                    <form onsubmit="event.preventDefault(); closeModal(); showToast('Demo Portal Authentication Verified!');" class="space-y-3.5">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Student / Staff ID or Email</label>
+                            <input type="text" required placeholder="HIA/2026/0412" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                            <input type="password" required placeholder="••••••••" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-primary">
+                        </div>
+                        <button type="submit" class="w-full bg-primary hover:bg-primaryDark text-white font-semibold py-3 rounded-xl shadow transition">
+                            Sign In to Portal
+                        </button>
+                    </form>
+                `;
+            }
+
+            backdrop.classList.remove('hidden');
+            backdrop.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            const backdrop = document.getElementById('modal-backdrop');
+            backdrop.classList.add('hidden');
+            backdrop.classList.remove('flex');
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal-backdrop').addEventListener('click', (e) => {
+            if (e.target.id === 'modal-backdrop') closeModal();
+        });
+
+        // 7. Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
